@@ -1,0 +1,13 @@
+nav {
+  background-color:#bae9f7;
+}
+#title {
+  margin-left: 10%;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold
+}
+#admin {
+  background-color: rgba(205, 214, 219, 0.5);;
+  margin-right: 3%;
+  margin-left: 10%;
+}
