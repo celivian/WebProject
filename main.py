@@ -36,6 +36,42 @@ def menu_profile():
        return render_template("menu_profile.html", current_user=current_user)
     return redirect("/login")
 
+@app.route("/menu/admin", methods=['GET', 'POST'])
+def menu_admin():
+    if current_user.is_authenticated:
+       return render_template("menu_admin.html", current_user=current_user)
+    return redirect("/login")
+
+@app.route("/menu/timetable", methods=['GET', 'POST'])
+def menu_timetable():
+    if current_user.is_authenticated:
+       return render_template("menu_timetable.html", current_user=current_user)
+    return redirect("/login")
+
+@app.route("/menu/marks", methods=['GET', 'POST'])
+def menu_marks():
+    if current_user.is_authenticated:
+       return render_template("menu_marks.html", current_user=current_user)
+    return redirect("/login")
+
+@app.route("/menu/class", methods=['GET', 'POST'])
+def menu_class():
+    if current_user.is_authenticated:
+       return render_template("menu_class.html", current_user=current_user)
+    return redirect("/login")
+
+@app.route("/menu/calendar", methods=['GET', 'POST'])
+def menu_calendar():
+    if current_user.is_authenticated:
+       return render_template("menu_calendar.html", current_user=current_user)
+    return redirect("/login")
+
+@app.route("/menu/teacher", methods=['GET', 'POST'])
+def menu_teacher():
+    if current_user.is_authenticated:
+       return render_template("menu_teacher.html", current_user=current_user)
+    return redirect("/login")
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -49,10 +85,6 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
-
-@app.route('/menu/admin', methods=['GET', 'POST'])
-def menu_admin_panel():
-    return render_template('admin_panel.html')
 
 
 
