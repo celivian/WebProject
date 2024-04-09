@@ -11,3 +11,9 @@ nav {
   margin-right: 3%;
   margin-left: 10%;
 }
+#tabs {
+  display: flex;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: 1%
+}

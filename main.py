@@ -20,7 +20,7 @@ def load_user(user_id):
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template("main.html")
+    return render_template("m.html")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -29,7 +29,6 @@ def login():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.login == form.login.data).first()
-        print(user)
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
