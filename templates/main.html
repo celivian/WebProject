@@ -13,7 +13,9 @@
 	<header>
 		<nav class="navbar navbar-light">
 			<h1 id="title">Online School Journal</h1>
-	    <button id="admin" type="button" class="btn">Админ-панель</button>
+			 {% if current_user.is_authenticated %}
+			 <a class="navbar-brand" href="/logout">{{ current_user.login }}</a>
+			 {% endif %}
 		</nav>
 	</header>
 	<!-- Begin page content -->
