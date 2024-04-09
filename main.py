@@ -24,28 +24,37 @@ def logout():
     return redirect("/login")
 
 
-@app.route("/menu", methods=['GET', 'POST'])
-def menu():
+@app.route("/menu/ads", methods=['GET', 'POST'])
+def menu_ads():
     if current_user.is_authenticated:
-       return render_template("menu.html", current_user=current_user)
+       return render_template("menu_ads.html", current_user=current_user)
     return redirect("/login")
 
+@app.route("/menu/profile", methods=['GET', 'POST'])
+def menu_profile():
+    if current_user.is_authenticated:
+       return render_template("menu_profile.html", current_user=current_user)
+    return redirect("/login")
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        logout_user()
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.login == form.login.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect("/menu")
+            return redirect("/menu/ads")
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
+@app.route('/menu/admin', methods=['GET', 'POST'])
+def menu_admin_panel():
+    return render_template('admin_panel.html')
+
+
 
 
 

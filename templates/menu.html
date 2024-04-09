@@ -1,29 +1,17 @@
-{% extends "main.html" %}
-
-{% block content %}
-
-<div id="tabs" class="btn-group" role="group" aria-label="Базовая группа переключателей радио">
-	<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-	<label class="btn btn-outline-primary" for="btnradio1">Объявления</label>
-	<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-	<label class="btn btn-outline-primary" for="btnradio2">Личный кабинет</label>
-	<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-	<label class="btn btn-outline-primary" for="btnradio3">Расписание уроков</label>
-	<input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
-	<label class="btn btn-outline-primary" for="btnradio4">Оценки</label>
-	<input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
-	<label class="btn btn-outline-primary" for="btnradio5">Мой класс</label>
-	<input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off">
-	<label class="btn btn-outline-primary" for="btnradio6">Календарь</label>
-	{% if current_user.role == "admin" %}
-	<input type="radio" class="btn-check"  name="btnradio" id="btnradio7" autocomplete="off">
-	<label  class="btn btn-outline-primary" for="btnradio7" ><a href="/menu/admin" style="text-decoration: none;">Админ-панель</a></label>
-	{% endif %}
-	{% if current_user.role == "teacher" %}
-	<input type="radio" class="btn-check" name="btnradio" id="btnradio8" autocomplete="off">
-	<label class="btn btn-outline-primary" for="btnradio8">Панель учителя</label>
-	{% endif %}
-</div>
-    {% block content %}{% endblock %}
-
-{% endblock %}
+<main role="main" class="container">
+        <div id="tabs" class="btn-group">
+            <a href="/menu/ads" class="btn btn-outline-primary">Объявления</a>
+            <a href="/menu/profile" class="btn btn-outline-primary">Личный кабинет</a>
+            <a href="/menu/timetable" class="btn btn-outline-primary">Расписание уроков</a>
+            <a href="/menu/marks" class="btn btn-outline-primary">Оценки</a>
+            <a href="/menu/class" class="btn btn-outline-primary">Мой класс</a>
+            <a href="/menu/calendar" class="btn btn-outline-primary">Календарь</a>
+            {% if current_user.role == "admin" %}
+            <a href="/menu/admin" class="btn btn-outline-primary">Календарь</a>
+            {% endif %}
+            {% if current_user.role == "teacher" %}
+            <a href="/menu/teacher" class="btn btn-outline-primary">Календарь</a>
+            {% endif %}
+        </div>
+        {% block content %}{% endblock %}
+    </main>

@@ -20,8 +20,22 @@
 	</header>
 	<!-- Begin page content -->
 	<main role="main" class="container">
-		{% block content %}{% endblock %}
-	</main>
+        <div id="tabs" class="btn-group">
+            <a href="/menu/ads" class="btn btn-outline-primary">Объявления</a>
+            <a href="/menu/profile" class="btn btn-outline-primary">Личный кабинет</a>
+            <a href="/menu/timetable" class="btn btn-outline-primary">Расписание уроков</a>
+            <a href="/menu/marks" class="btn btn-outline-primary">Оценки</a>
+            <a href="/menu/class" class="btn btn-outline-primary">Мой класс</a>
+            <a href="/menu/calendar" class="btn btn-outline-primary">Календарь</a>
+            {% if current_user.role == "admin" %}
+            <a href="/menu/admin" class="btn btn-outline-primary">Админ-панель</a>
+            {% endif %}
+            {% if current_user.role == "teacher" %}
+            <a href="/menu/teacher" class="btn btn-outline-primary">Панель учителя</a>
+            {% endif %}
+        </div>
+        {% block content %}{% endblock %}
+    </main>
 </body>
 
 </html>
