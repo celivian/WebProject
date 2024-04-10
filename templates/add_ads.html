@@ -1,0 +1,27 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.ad_name.label }}<br>
+        {{ form.ad_name(class="form-control") }}<br>
+        {% for error in form.ad_name.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.discription.label }}<br>
+        {{ form.discription(class="form-control") }}<br>
+        {% for error in form.discription.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+</form>
+
+{% endblock %}

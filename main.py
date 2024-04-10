@@ -2,8 +2,9 @@ from flask import Flask, render_template, redirect, request, abort
 from flask_login import login_user, LoginManager, current_user, login_required, logout_user
 
 from data import db_session
+from data.ads_form import AdsForm
 from data.ads_forming import Ads
-from data.login_forming import LoginForm
+from data.login_form import LoginForm
 from data.user_forming import User
 
 app = Flask(__name__)
@@ -40,6 +41,25 @@ def menu_profile():
     if current_user.is_authenticated:
         return render_template("menu_profile.html", current_user=current_user)
     return redirect("/login")
+
+@app.route("/ads/add", methods=['GET', 'POST'])
+def add_ads():
+    if current_user.is_authenticated:
+        form = AdsForm()
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            ad = Ads()
+            ad.owner_id = current_user.id
+            ad.ad_name = form.ad_name.data
+            ad.discription = form.discription.data
+            db_sess.add(ad)
+            db_sess.commit()
+            return redirect('/menu/ads')
+        return render_template("add_ads.html", current_user=current_user, form=form)
+   #     return redirect('/menu/ads')
+   # return render_template('add_jobs.html', title='Добавление работы',
+   #                        form=form)
+   # return redirect("/login")
 
 
 @app.route("/menu/admin", methods=['GET', 'POST'])
