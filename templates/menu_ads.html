@@ -12,6 +12,16 @@
     <h5>{{item.date}}</h5>
     <h5>{{item.owner_id}}</h5>
 </div>
+{% if current_user.is_authenticated and current_user.id == item.owner_id or current_user.role == "admin" %}
+    <div>
+        <a href="/ads/edit/{{ item.id }}" class="btn btn-warning">
+            Изменить
+        </a>
+        <a href="/ads/delete/{{ item.id }}" class="btn btn-danger">
+            Удалить
+        </a>
+    </div>
+{% endif %}
 
 {% endfor %}
 

@@ -118,6 +118,19 @@ def login():
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
 
+@app.route('/ads/delete/<int:id>', methods=['GET', 'POST'])
+def ads_delete(id):
+    if current_user.is_authenticated:
+        db_sess = db_session.create_session()
+        ads = db_sess.query(Ads).filter(Ads.id == id,
+                                           (Ads.owner_id == current_user.id) | (current_user.role == 'admin') ).first()
+        if ads:
+            db_sess.delete(ads)
+            db_sess.commit()
+        else:
+            abort(404)
+        return redirect('/menu/ads')
+    return redirect('/login')
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
