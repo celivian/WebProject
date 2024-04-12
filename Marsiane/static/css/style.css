@@ -1,0 +1,11 @@
+th, tr, td, .center-text {
+text-align: center;
+vertical-align: middle;
+}
+h2 {
+text-align: center;
+}
+
+.cell-1 {
+  vertical-align: middle;
+}

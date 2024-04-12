@@ -1,0 +1,22 @@
+#	<div id="tabs" class="btn-group" role="group" aria-label="Базовая группа переключателей радио">
+#<input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
+#<label class="btn btn-outline-primary" for="btnradio1">Объявления</label>
+#<input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
+#<label class="btn btn-outline-primary" for="btnradio2">Личный кабинет</label>
+#<input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
+#<label class="btn btn-outline-primary" for="btnradio3"><a href="/menu/timetable" style="text-decoration: none;">Расписание уроков</a></label>
+#<input type="radio" class="btn-check" name="btnradio" id="btnradio4" autocomplete="off">
+#<label class="btn btn-outline-primary" for="btnradio4"><a href="/menu/marks" style="text-decoration: none;">Оценки</a></label>
+#<input type="radio" class="btn-check" name="btnradio" id="btnradio5" autocomplete="off">
+#<label class="btn btn-outline-primary" for="btnradio5"><a href="/menu/class" style="text-decoration: none;">Мой класс</a></label>
+#<input type="radio" class="btn-check" name="btnradio" id="btnradio6" autocomplete="off">
+#<label class="btn btn-outline-primary" for="btnradio6"><a href="/menu/calendar" style="text-decoration: none;">Календарь</a></label>
+#{% if current_user.role == "admin" %}
+#<input type="radio" class="btn-check"  name="btnradio" id="btnradio7" autocomplete="off">
+#<label  class="btn btn-outline-primary" for="btnradio7" ><a href="/menu/admin" style="text-decoration: none;">Админ-панель</a></label>
+#{% endif %}
+#{% if current_user.role == "teacher" %}
+#<input type="radio" class="btn-check" name="btnradio" id="btnradio8" autocomplete="off">
+#<label class="btn btn-outline-primary" for="btnradio8">Панель учителя</label>
+#{% endif %}
+</d#v>

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Works log</h2>
+ {% if current_user.is_authenticated %}
+        <p>
+            <a class="btn btn-primary " href="/add_jobs">Добавить работу</a>
+        </p>
+{% endif %}
+{% for item in jobs %}
+<h3>Action # {{item.id}}</h3>
+<table class="table">
+  <thead>
+    <tr class="table-secondary">
+      <th scope="col" width="40%" >Title of activity</th>
+      <th scope="col" width="15%">Team leader</th>
+      <th scope="col" width="15%">Duration</th>
+      <th scope="col" width="15%">List of collaborators</th>
+      <th scope="col" width="15%">Is finished</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row" class="table-success">{{item.job}}</th>
+      <td class="table-success">{{item.team_leader}}</td>
+      <td class="table-success">{{item.work_size}}</td>
+      <td class="table-success">{{item.collaborators}}</td>
+      {% if item.is_finished == True %}
+      <td class="table-success">Is finished</td>
+      {% elif item.is_finished == False %}
+      <td class="table-danger">Is not finished</td>
+      {% endif %}
+
+    </tr>
+  </tbody>
+
+</table>
+{% if current_user.is_authenticated and current_user == item.user or current_user.id == 1 %}
+    <div>
+        <a href="/work/{{ item.id }}" class="btn btn-warning">
+            Изменить
+        </a>
+        <a href="/work_delete/{{ item.id }}" class="btn btn-danger">
+            Удалить
+        </a>
+    </div>
+{% endif %}
+{% endfor %}
+
+{% endblock %}
