@@ -131,7 +131,32 @@ def ads_delete(id):
             abort(404)
         return redirect('/menu/ads')
     return redirect('/login')
+@app.route('/ads/edit/<int:id>', methods=['GET', 'POST'])
+def ads_edit(id):
+    form = AdsForm()
+    if request.method == "GET":
+        db_sess = db_session.create_session()
+        ads = db_sess.query(Ads).filter(Ads.id == id,
+                                          (Ads.owner_id == current_user.id) | (current_user.role == 'admin')
+                                          ).first()
+        if ads:
+            form.ad_name.data = ads.ad_name
+            form.discription.data = ads.discription
 
+        else:
+            abort(404)
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        ads = db_sess.query(Ads).filter(Ads.id == id,
+                                        (Ads.owner_id == current_user.id) | (current_user.role == 'admin')
+                                        ).first()
+        ads.owner_id = current_user.id
+        ads.ad_name = form.ad_name.data
+        ads.discription = form.discription.data
+        db_sess.add(ads)
+        db_sess.commit()
+        return redirect('/menu/ads')
+    return render_template("edit_ads.html", current_user=current_user, form=form)
 
 
 if __name__ == '__main__':
