@@ -93,7 +93,7 @@ def menu_class():
 @app.route("/menu/calendar", methods=['GET', 'POST'])
 def menu_calendar():
     if current_user.is_authenticated:
-        return render_template("menu_calendar.html", current_user=current_user)
+        return render_template("calendar.html", current_user=current_user)
     return redirect("/login")
 
 
@@ -120,7 +120,7 @@ def login():
 
 @app.route('/ads/delete/<int:id>', methods=['GET', 'POST'])
 def ads_delete(id):
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.role == 'admin':
         db_sess = db_session.create_session()
         ads = db_sess.query(Ads).filter(Ads.id == id,
                                            (Ads.owner_id == current_user.id) | (current_user.role == 'admin') ).first()
@@ -131,6 +131,8 @@ def ads_delete(id):
             abort(404)
         return redirect('/menu/ads')
     return redirect('/login')
+
+
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
