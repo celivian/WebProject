@@ -42,6 +42,7 @@ def menu_profile():
         return render_template("menu_profile.html", current_user=current_user)
     return redirect("/login")
 
+
 @app.route("/ads/add", methods=['GET', 'POST'])
 def add_ads():
     if current_user.is_authenticated:
@@ -56,10 +57,12 @@ def add_ads():
             db_sess.commit()
             return redirect('/menu/ads')
         return render_template("add_ads.html", current_user=current_user, form=form)
-   #     return redirect('/menu/ads')
-   # return render_template('add_jobs.html', title='Добавление работы',
-   #                        form=form)
-   # return redirect("/login")
+
+
+#     return redirect('/menu/ads')
+# return render_template('add_jobs.html', title='Добавление работы',
+#                        form=form)
+# return redirect("/login")
 
 
 @app.route("/menu/admin", methods=['GET', 'POST'])
@@ -118,12 +121,13 @@ def login():
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
 
+
 @app.route('/ads/delete/<int:id>', methods=['GET', 'POST'])
 def ads_delete(id):
     if current_user.is_authenticated and current_user.role == 'admin':
         db_sess = db_session.create_session()
         ads = db_sess.query(Ads).filter(Ads.id == id,
-                                           (Ads.owner_id == current_user.id) | (current_user.role == 'admin') ).first()
+                                        (Ads.owner_id == current_user.id) | (current_user.role == 'admin')).first()
         if ads:
             db_sess.delete(ads)
             db_sess.commit()
@@ -131,14 +135,16 @@ def ads_delete(id):
             abort(404)
         return redirect('/menu/ads')
     return redirect('/login')
+
+
 @app.route('/ads/edit/<int:id>', methods=['GET', 'POST'])
 def ads_edit(id):
     form = AdsForm()
     if request.method == "GET":
         db_sess = db_session.create_session()
         ads = db_sess.query(Ads).filter(Ads.id == id,
-                                          (Ads.owner_id == current_user.id) | (current_user.role == 'admin')
-                                          ).first()
+                                        (Ads.owner_id == current_user.id) | (current_user.role == 'admin')
+                                        ).first()
         if ads:
             form.ad_name.data = ads.ad_name
             form.discription.data = ads.discription
