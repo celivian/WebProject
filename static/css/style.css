@@ -24,7 +24,7 @@ nav {
   margin: 1% 1% 1% 1%
 }
 #calendar-header {
-    padding: 2px;
+    padding: 5px;
     background-color: #333;
     color: #fff;
 }
@@ -38,6 +38,7 @@ nav {
     padding: 2px;
     background-color: #fff;
     text-align: center;
+    position: relative;
 }
 .change-month {
     cursor: pointer;

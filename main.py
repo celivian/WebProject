@@ -4,6 +4,7 @@ from flask_login import login_user, LoginManager, current_user, login_required, 
 from data import db_session
 from data.ads_form import AdsForm
 from data.ads_forming import Ads
+from data.events_forming import Events
 from data.login_form import LoginForm
 from data.user_forming import User
 
@@ -92,11 +93,17 @@ def menu_class():
         return render_template("menu_class.html", current_user=current_user)
     return redirect("/login")
 
+@app.route("/calendar/events/<month>/<day>", methods=['GET', 'POST'])
+def get_event(month, day):
+    db_sess = db_session.create_session()
+    events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
+    return render_template("check.html", current_user=current_user, events=events)
+
 
 @app.route("/menu/calendar", methods=['GET', 'POST'])
 def menu_calendar():
     if current_user.is_authenticated:
-        return render_template("calendar.html", current_user=current_user)
+        return render_template("calendar.html", current_user=current_user, months=['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'])
     return redirect("/login")
 
 
