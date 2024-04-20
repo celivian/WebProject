@@ -4,6 +4,7 @@ from flask_login import login_user, LoginManager, current_user, login_required, 
 from data import db_session
 from data.ads_form import AdsForm
 from data.ads_forming import Ads
+from data.events_form import EventsForm
 from data.events_forming import Events
 from data.login_form import LoginForm
 from data.user_forming import User
@@ -97,7 +98,26 @@ def menu_class():
 def get_event(month, day):
     db_sess = db_session.create_session()
     events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
-    return render_template("check.html", current_user=current_user, events=events)
+    return render_template("check.html", current_user=current_user, events=events, month=month, day=day)
+
+@app.route("/calendar/events/add/<month>/<day>", methods=['GET', 'POST'])
+def add_event(month, day):
+    db_sess = db_session.create_session()
+    events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
+    if current_user.is_authenticated:
+        form = EventsForm()
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            ad = Events()
+            ad.owner_id = current_user.id
+            ad.name = form.name.data
+            ad.discription = form.discription.data
+            ad.day = day
+            ad.month = month
+            db_sess.add(ad)
+            db_sess.commit()
+            return redirect('/menu/calendar')
+        return render_template("add_event.html", current_user=current_user, events=events)
 
 
 @app.route("/menu/calendar", methods=['GET', 'POST'])

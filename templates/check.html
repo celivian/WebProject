@@ -2,9 +2,24 @@
 
 {% block content %}
 
-<h2>{{events.month}} {{events.day}}, {{events.year}}</h2>
+{% if events == True %}
+<h2>{{events.month}} {{events.day}} {{events.year}}</h2>
 <h2>{{events.name}}</h2>
 <h2>{{events.discription}}</h2>
 <h2>{{events.owner_id}}</h2>
+    {% if current_user.is_authenticated and current_user.id == events.owner_id or current_user.role == "admin" %}
+<div>
+    <a href="/calendar/events/edit/{{ events.id }}" class="btn btn-warning">
+        Изменить
+    </a>
+    <a href="/calendar/events/delete/{{ events.id }}" class="btn btn-danger">
+        Удалить
+    </a>
+</div>
+{% endif %}
+{% else %}
+<a class="btn btn-primary" href="/calendar/events/add/{{ month }}/{{ day }}" role="button">Добавить Объявление</a>
+{% endif %}
+
 
 {% endblock %}
