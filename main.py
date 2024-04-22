@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, abort
-from flask_login import login_user, LoginManager, current_user, login_required, logout_user
+from flask_login import LoginManager
+from flask_login.utils import login_user, current_user, login_required, logout_user
 
 from data import db_session
 from data.ads_form import AdsForm
@@ -34,6 +35,7 @@ def logout():
 
 
 @app.route("/menu/ads", methods=['GET', 'POST'])
+@login_required
 def menu_ads():
     if current_user.is_authenticated:
         db_sess = db_session.create_session()
@@ -43,6 +45,7 @@ def menu_ads():
 
 
 @app.route("/menu/profile", methods=['GET', 'POST'])
+@login_required
 def menu_profile():
     if current_user.is_authenticated:
         return render_template("menu_profile.html", current_user=current_user)

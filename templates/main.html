@@ -21,17 +21,17 @@
 	<!-- Begin page content -->
 	<main role="main" class="container">
         <div id="tabs" class="btn-group">
-            <a href="/menu/ads" class="btn btn-outline-primary">Объявления</a>
-            <a href="/menu/profile" class="btn btn-outline-primary">Личный кабинет</a>
-            <a href="/menu/timetable" class="btn btn-outline-primary">Расписание уроков</a>
-            <a href="/menu/marks" class="btn btn-outline-primary">Оценки</a>
-            <a href="/menu/class" class="btn btn-outline-primary">Мой класс</a>
-            <a href="/menu/calendar" class="btn btn-outline-primary">Календарь</a>
+            <a href="/menu/ads" class="btn btn-outline-secondary">Объявления</a>
+            <a href="/menu/profile" class="btn btn-outline-secondary">Личный кабинет</a>
+            <a href="/menu/timetable" class="btn btn-outline-secondary">Расписание уроков</a>
+            <a href="/menu/marks" class="btn btn-outline-secondary">Оценки</a>
+            <a href="/menu/class" class="btn btn-outline-secondary">Мой класс</a>
+            <a href="/menu/calendar" class="btn btn-outline-secondary">Календарь</a>
             {% if current_user.role == "admin" %}
-            <a href="/menu/admin" class="btn btn-outline-primary">Админ-панель</a>
+            <a href="/menu/admin" class="btn btn-outline-secondary">Админ-панель</a>
             {% endif %}
             {% if current_user.role == "teacher" %}
-            <a href="/menu/teacher" class="btn btn-outline-primary">Панель учителя</a>
+            <a href="/menu/teacher" class="btn btn-outline-secondary">Панель учителя</a>
             {% endif %}
         </div>
         {% block content %}{% endblock %}

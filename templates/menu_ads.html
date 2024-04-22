@@ -4,19 +4,19 @@
 
 {% if ads %}
 {% for item in ads %}
-<div class="ads" style="background-color: #ccd5e3; box-sizing: border-box; border-radius: 10px 10px 10px 10px; margin-top:10px; margin-bottom:10px">
+<div class="ads" style="background-color: #ccd5e3; box-sizing: border-box; border-radius: 10px 10px 10px 10px; margin-top:20px; margin-bottom:10px">
     <div style="margin-left: 10px; padding: 10px 10px 10px 10px; word-wrap: normal">
     <h1 style="word-wrap: break-word">
         {{item.ad_name}}
     </h1>
     <h2 style="word-wrap: break-word">{{item.discription}}</h2>
-    <h6>имя и фамилия владельца: {{current_user.name}} {{current_user.surname}}</h6>
-    <h6>время оформления: {{item.date}}</h6>
-    <h6>идентификатор владельца: {{item.owner_id}}</h6>
+    <h6>Владелец: {{current_user.name}} {{current_user.surname}}</h6>
+    <h6>Время оформления: {{item.date}}</h6>
+    <h6>ID владельца: {{item.owner_id}}</h6>
         </div>
 </div>
 {% if current_user.is_authenticated and current_user.id == item.owner_id or current_user.role == "admin" %}
-    <div>
+    <div style="margin-bottom:40px">
         <a href="/ads/edit/{{ item.id }}" class="btn btn-warning">
             Изменить
         </a>
