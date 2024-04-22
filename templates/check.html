@@ -10,7 +10,7 @@
 {% endif %}
 {% if current_user.is_authenticated and current_user.id == events.owner_id or current_user.role == "admin" and events%}
 <div>
-    <a href="/calendar/events/edit/{{ events.id }}" class="btn btn-warning">
+    <a href="/calendar/events/edit/{{ events.month }}/{{ events.day }}" class="btn btn-warning">
         Изменить
     </a>
     <a href="/calendar/events/delete/{{ events.month }}/{{ events.day }}" class="btn btn-danger">

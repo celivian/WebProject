@@ -209,6 +209,25 @@ def ads_edit(id):
         return redirect('/menu/ads')
     return render_template("edit_ads.html", current_user=current_user, form=form)
 
+@app.route("/calendar/events/edit/<month>/<day>", methods=['GET', 'POST'])
+def edit_event(month, day):
+    db_sess = db_session.create_session()
+    events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
+    if current_user.is_authenticated:
+        form = EventsForm()
+        if form.validate_on_submit():
+            events.owner_id = current_user.id
+            events.name = form.name.data
+            events.discription = form.discription.data
+            events.day = day
+            events.month = month
+            db_sess.add(events)
+            db_sess.commit()
+            return redirect(f'/calendar/events/{month}/{day}')
+        return render_template("add_event.html", current_user=current_user, events=events, form=form)
+
+
+
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
