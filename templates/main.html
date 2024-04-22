@@ -14,7 +14,7 @@
 		<nav class="navbar navbar-light">
 			<h1 id="title">Online School Journal</h1>
 			 {% if current_user.is_authenticated %}
-			 <a class="navbar-brand" href="/logout">{{ current_user.login }}</a>
+			 <a class="navbar-brand" href="/menu/profile"><h3>{{ current_user.login }}</h3></a>
 			 {% endif %}
 		</nav>
 	</header>

@@ -1,9 +1,8 @@
 nav {
-  background-color:#bae9f7;
+  background-color:#ccd5e3;
 }
 #title {
   margin-left: 10%;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   font-weight: bold
 }
 #admin {
@@ -49,3 +48,4 @@ nav {
   flex-direction: row;
   justify-content: space-evenly;
 }
+
