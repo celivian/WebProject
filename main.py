@@ -22,6 +22,10 @@ def load_user(user_id):
     return db_sess.get(User, user_id)
 
 
+@app.route('/')
+def peresilka():
+    return redirect("/login")
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -98,6 +102,7 @@ def menu_class():
 def get_event(month, day):
     db_sess = db_session.create_session()
     events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
+    print(events)
     return render_template("check.html", current_user=current_user, events=events, month=month, day=day)
 
 @app.route("/calendar/events/add/<month>/<day>", methods=['GET', 'POST'])
@@ -116,8 +121,21 @@ def add_event(month, day):
             ad.month = month
             db_sess.add(ad)
             db_sess.commit()
-            return redirect('/menu/calendar')
-        return render_template("add_event.html", current_user=current_user, events=events)
+            return redirect(f'/calendar/events/{month}/{day}')
+        return render_template("add_event.html", current_user=current_user, events=events, form=form)
+
+@app.route("/calendar/events/delete/<month>/<day>", methods=['GET', 'POST'])
+def del_event(month, day):
+    if current_user.is_authenticated and current_user.role == 'admin':
+        db_sess = db_session.create_session()
+        events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
+        if events:
+            db_sess.delete(events)
+            db_sess.commit()
+        else:
+            abort(404)
+        return redirect(f'/calendar/events/{month}/{day}')
+    return redirect('/login')
 
 
 @app.route("/menu/calendar", methods=['GET', 'POST'])

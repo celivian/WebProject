@@ -6,6 +6,7 @@ from .db_session import SqlAlchemyBase
 
 class Ads(SqlAlchemyBase):
     __tablename__ = 'ads'
+
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
 
