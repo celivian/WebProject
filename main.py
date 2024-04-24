@@ -258,8 +258,8 @@ def list_users():
         return render_template('list_user.html', current_user=current_user, users=users)
     return redirect('/login')
 
-@app.route("/request/register", methods=['GET', 'POST'])
-def register():
+#@app.route("/request/register", methods=['GET', 'POST'])
+#def register():
 
 
 

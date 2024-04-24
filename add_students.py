@@ -9,9 +9,9 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 db_session.global_init("./db/journal.db")
 
 user = User()
-user.surname = "wqeqw"
-user.name = "qweqe"
-user.login = 'tests'
+user.surname = "Ученик"
+user.name = "Учениковский"
+user.login = 'test1'
 user.classs = '9Б'
 user.age = 15
 user.role = 'student'
