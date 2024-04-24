@@ -15,11 +15,11 @@
     </nav>
 </header>
 <main role="main" class="container">
-    <h1>Авторизация</h1>
+    <h2 style="text-align: center; margin-top: 2%">Авторизация</h2>
     {% if message %}
     <div class="alert alert-danger">{{ message }}</div>
     {% endif %}
-    <form action="" method="post">
+    <form action="" method="post" style="margin-top: 10px; margin-right: 30%; margin-left: 30%">
         {{ form.hidden_tag() }}
         <p>
             {{ form.login.label }}<br>
@@ -40,7 +40,7 @@
         {% endfor %}
         </p>
         <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <p>{{ form.submit(type="submit", class="btn btn-secondary") }}</p>
 
 
     </form>

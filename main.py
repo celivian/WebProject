@@ -28,7 +28,6 @@ def peresilka():
     return redirect("/login")
 
 @app.route('/logout')
-@login_required
 def logout():
     logout_user()
     return redirect("/login")
@@ -53,8 +52,9 @@ def menu_profile():
 
 
 @app.route("/ads/add", methods=['GET', 'POST'])
+@login_required
 def add_ads():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.role == 'admin':
         form = AdsForm()
         if form.validate_on_submit():
             db_sess = db_session.create_session()
@@ -66,6 +66,7 @@ def add_ads():
             db_sess.commit()
             return redirect('/menu/ads')
         return render_template("add_ads.html", current_user=current_user, form=form)
+    return redirect('/login')
 
 
 #     return redirect('/menu/ads')
@@ -75,6 +76,7 @@ def add_ads():
 
 
 @app.route("/menu/admin", methods=['GET', 'POST'])
+@login_required
 def menu_admin():
     if current_user.is_authenticated and current_user.role == 'admin':
         return render_template("menu_admin.html", current_user=current_user)
@@ -82,6 +84,7 @@ def menu_admin():
 
 
 @app.route("/menu/timetable", methods=['GET', 'POST'])
+@login_required
 def menu_timetable():
     if current_user.is_authenticated:
         return render_template("menu_timetable.html", current_user=current_user)
@@ -89,6 +92,7 @@ def menu_timetable():
 
 
 @app.route("/menu/marks", methods=['GET', 'POST'])
+@login_required
 def menu_marks():
     if current_user.is_authenticated:
         return render_template("menu_marks.html", current_user=current_user)
@@ -96,23 +100,28 @@ def menu_marks():
 
 
 @app.route("/menu/class", methods=['GET', 'POST'])
+@login_required
 def menu_class():
     if current_user.is_authenticated:
         return render_template("menu_class.html", current_user=current_user)
     return redirect("/login")
 
 @app.route("/calendar/events/<month>/<day>", methods=['GET', 'POST'])
+@login_required
 def get_event(month, day):
-    db_sess = db_session.create_session()
-    events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
-    print(events)
-    return render_template("check.html", current_user=current_user, events=events, month=month, day=day)
+    if current_user.is_authenticated:
+        db_sess = db_session.create_session()
+        events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
+        print(events)
+        return render_template("check.html", current_user=current_user, events=events, month=month, day=day)
+    return redirect("/login")
 
 @app.route("/calendar/events/add/<month>/<day>", methods=['GET', 'POST'])
+@login_required
 def add_event(month, day):
-    db_sess = db_session.create_session()
-    events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.role == 'admin':
+        db_sess = db_session.create_session()
+        events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
         form = EventsForm()
         if form.validate_on_submit():
             db_sess = db_session.create_session()
@@ -126,8 +135,10 @@ def add_event(month, day):
             db_sess.commit()
             return redirect(f'/calendar/events/{month}/{day}')
         return render_template("add_event.html", current_user=current_user, events=events, form=form)
+    return redirect('/login')
 
 @app.route("/calendar/events/delete/<month>/<day>", methods=['GET', 'POST'])
+@login_required
 def del_event(month, day):
     if current_user.is_authenticated and current_user.role == 'admin':
         db_sess = db_session.create_session()
@@ -142,6 +153,7 @@ def del_event(month, day):
 
 
 @app.route("/menu/calendar", methods=['GET', 'POST'])
+@login_required
 def menu_calendar():
     if current_user.is_authenticated:
         return render_template("calendar.html", current_user=current_user, months=['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'])
@@ -149,6 +161,7 @@ def menu_calendar():
 
 
 @app.route("/menu/teacher", methods=['GET', 'POST'])
+@login_required
 def menu_teacher():
     if current_user.is_authenticated and current_user.role == 'teacher':
         return render_template("menu_teacher.html", current_user=current_user)
@@ -171,6 +184,7 @@ def login():
 
 
 @app.route('/ads/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
 def ads_delete(id):
     if current_user.is_authenticated and current_user.role == 'admin':
         db_sess = db_session.create_session()
@@ -186,37 +200,41 @@ def ads_delete(id):
 
 
 @app.route('/ads/edit/<int:id>', methods=['GET', 'POST'])
+@login_required
 def ads_edit(id):
-    form = AdsForm()
-    if request.method == "GET":
-        db_sess = db_session.create_session()
-        ads = db_sess.query(Ads).filter(Ads.id == id,
-                                        (Ads.owner_id == current_user.id) | (current_user.role == 'admin')
-                                        ).first()
-        if ads:
-            form.ad_name.data = ads.ad_name
-            form.discription.data = ads.discription
+    if current_user.is_authenticated and current_user.role == 'admin':
+        form = AdsForm()
+        if request.method == "GET":
+            db_sess = db_session.create_session()
+            ads = db_sess.query(Ads).filter(Ads.id == id,
+                                            (Ads.owner_id == current_user.id) | (current_user.role == 'admin')
+                                            ).first()
+            if ads:
+                form.ad_name.data = ads.ad_name
+                form.discription.data = ads.discription
 
-        else:
-            abort(404)
-    if form.validate_on_submit():
-        db_sess = db_session.create_session()
-        ads = db_sess.query(Ads).filter(Ads.id == id,
-                                        (Ads.owner_id == current_user.id) | (current_user.role == 'admin')
-                                        ).first()
-        ads.owner_id = current_user.id
-        ads.ad_name = form.ad_name.data
-        ads.discription = form.discription.data
-        db_sess.add(ads)
-        db_sess.commit()
-        return redirect('/menu/ads')
-    return render_template("edit_ads.html", current_user=current_user, form=form)
+            else:
+                abort(404)
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            ads = db_sess.query(Ads).filter(Ads.id == id,
+                                            (Ads.owner_id == current_user.id) | (current_user.role == 'admin')
+                                            ).first()
+            ads.owner_id = current_user.id
+            ads.ad_name = form.ad_name.data
+            ads.discription = form.discription.data
+            db_sess.add(ads)
+            db_sess.commit()
+            return redirect('/menu/ads')
+        return render_template("edit_ads.html", current_user=current_user, form=form)
+    return redirect('/login')
 
 @app.route("/calendar/events/edit/<month>/<day>", methods=['GET', 'POST'])
+@login_required
 def edit_event(month, day):
-    db_sess = db_session.create_session()
-    events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and current_user.role == 'admin':
+        db_sess = db_session.create_session()
+        events = db_sess.query(Events).filter(Events.month == month, Events.day == day).first()
         form = EventsForm()
         if form.validate_on_submit():
             events.owner_id = current_user.id
@@ -228,6 +246,16 @@ def edit_event(month, day):
             db_sess.commit()
             return redirect(f'/calendar/events/{month}/{day}')
         return render_template("add_event.html", current_user=current_user, events=events, form=form)
+    return redirect('/login')
+
+@app.route("/menu/admin/list/users", methods=['GET', 'POST'])
+@login_required
+def list_users():
+    if current_user.is_authenticated and current_user.role == 'admin':
+        db_sess = db_session.create_session()
+        users = db_sess.query(User).all()
+        return render_template()
+    return redirect('/login')
 
 
 

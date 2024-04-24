@@ -4,25 +4,146 @@
 <h1 style="text-align:center">2024</h1>
 <div id='jile'>
     {% for month in months %}
-    <div id="calendar">
-        <div id="calendar-header">
+    <div id="calendar" style="border-radius: 10px;">
+        <div id="calendar-header" style="border-radius: 10px 10px 0px 0px;">
             <h1 style="text-align: center; font-size: 20px" id="month">{{ month }}</h1>
         </div>
         <div id="calendar-body">
-            <div>Пн</div>
-            <div>Вт</div>
-            <div>Ср</div>
-            <div>Чт</div>
-            <div>Пт</div>
-            <div>Сб</div>
-            <div>Вс</div>
+            <div style="background-color: #bababa">Пн</div>
+            <div style="background-color: #bababa">Вт</div>
+            <div style="background-color: #bababa">Ср</div>
+            <div style="background-color: #bababa">Чт</div>
+            <div style="background-color: #bababa">Пт</div>
+            <div style="background-color: #bababa">Сб</div>
+            <div style="background-color: #bababa">Вс</div>
             <!-- Days of the month will go here -->
             {% for i in range(31) %}
-            {% if month == "Февраль" %}
+
+
+            {% if month == "Январь" or month == "Апрель" or month == "Июль" %}
+            {% if month == "Апрель" and i == 30%}
+            <div style="background-color: #d1d1d1;"></div>
+            {% else %}
             <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
-                <div class="days">{{i + 1}}</div>
-            </a>
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+            {% endif %}
+
+
+            {% if month == "Март" and i == 0 %}
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Март" and i > 0 %}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+            {% if month == "Февраль" and i == 0%}
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Февраль" and 29 > i > 0 %}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+            {% if month == "Май" and i == 0 %}
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Май" and i > 0%}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+            {% if month == "Июнь" and i == 0%}
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Июнь" and 30 > i > 0 %}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+            {% if month == "Август" and i == 0 %}
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Август" and i > 0%}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+            {% if month == "Сентябрь" and i == 0%}
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Сентябрь" and 30 > i > 0 %}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+            {% if month == "Октябрь" and i == 0 %}
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Октябрь" and i > 0%}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+            {% if month == "Ноябрь" and i == 0%}
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Ноябрь" and 30 > i > 0 %}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+            {% if month == "Декабрь" and i == 0%}
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <div style="background-color: #d1d1d1;"></div>
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% elif month == "Декабрь" and  i > 0 %}
+            <a style="text-decoration:none; color:black" href="/calendar/events/{{ month }}/{{ loop.index }}">
+                <div class="days">{{i + 1}}</div></a>
+            {% endif %}
+
+
+
             {% endfor %}
+
+
+
+
+
         </div>
     </div>
     {% endfor %}
