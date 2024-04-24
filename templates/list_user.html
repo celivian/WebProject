@@ -1,3 +1,25 @@
 {% extends "main.html" %}
 
+{% block content %}
+<table class="table">
+  <thead>
+    <tr>
+        <th scope="col">ID</th>
+      <th scope="col">Фамилия</th>
+      <th scope="col">Имя</th>
+      <th scope="col">Назначение</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for i in users %}
+    <tr>
+      <th>{{ i.id }}</th>
+      <td>{{ i.surname }}</td>
+      <td>{{ i.name }}</td>
+      <td>{{ i.role }}</td>
+    </tr>
+  {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}

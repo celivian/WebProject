@@ -254,7 +254,8 @@ def list_users():
     if current_user.is_authenticated and current_user.role == 'admin':
         db_sess = db_session.create_session()
         users = db_sess.query(User).all()
-        return render_template()
+        print(users)
+        return render_template('list_user.html', current_user=current_user, users=users)
     return redirect('/login')
 
 
