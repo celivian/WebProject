@@ -178,7 +178,7 @@ def login():
         db_sess = db_session.create_session()
         print(4)
         user = db_sess.query(User).filter(User.login == form.login.data).first()
-        print(5, user)
+        print(5, user, user.hashed_password)
         if user and user.check_password(form.password.data):
             print(6)
             login_user(user, remember=form.remember_me.data)
