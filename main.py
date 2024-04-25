@@ -170,16 +170,25 @@ def menu_teacher():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    print(1)
     form = LoginForm()
+    print(2)
     if form.validate_on_submit():
+        print(3)
         db_sess = db_session.create_session()
+        print(4)
         user = db_sess.query(User).filter(User.login == form.login.data).first()
+        print(5, user)
         if user and user.check_password(form.password.data):
+            print(6)
             login_user(user, remember=form.remember_me.data)
+            print(7)
             return redirect("/menu/ads")
+        print(8)
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
+    print(9)
     return render_template('login.html', title='Авторизация', form=form)
 
 
